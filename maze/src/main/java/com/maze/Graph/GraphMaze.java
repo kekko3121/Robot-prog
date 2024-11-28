@@ -3,19 +3,32 @@ package com.maze.Graph;
 import com.maze.Interactors.ValueBox;
 import com.maze.Interactors.Box;
 
+/**
+ * Classe per la generazione del grafo a partire dal labirinto generato
+ * estende la classe Graph astratta
+ */
 public class GraphMaze extends Graph{
     
-    private Box[][] maze;
+    private Box[][] maze; // labirinto
 
-    private int dim;
+    private int dim; // dimensione del labirinto
 
+    /**
+     * Costruttore della classe per passare il labirinto e la dimensione
+     * @param maze
+     * @param dim
+     */
     public GraphMaze(Box[][] maze, int dim){
-        super();
-        this.maze = maze;
-        this.dim = dim;
+        super(); // chiamata al costruttore della classe madre
+        this.maze = maze; // inizializzazione del labirinto
+        this.dim = dim; // inizializzazione della dimensione
     }
 
-
+    /**
+     * Metodo per ottenere il nodo a partire dall'indice
+     * @param index
+     * @return
+     */
     @Override
     public Box getNode(Integer index) {
         for (int i = 0; i < this.dim; i++)
@@ -27,7 +40,9 @@ public class GraphMaze extends Graph{
         return null;
     }
 
-
+    /**
+     * Metodo per generare il grafo a partire dal labirinto
+     */
     public void graphGen(){
         //settaggio degli id dei nodi - solo i nodi non "wall" hanno un id
         int id = 0;
@@ -35,8 +50,6 @@ public class GraphMaze extends Graph{
             for (int j = 0; j < this.dim; j++)
                 if (this.maze[i][j].getValue() != ValueBox.WALL)
                     this.maze[i][j].setId(id++);
-
-
 
         //Si aggiungono gli archi in base ai vicini - le Box muro non hanno
         //archi entranti / archi uscenti
@@ -86,5 +99,13 @@ public class GraphMaze extends Graph{
                         this.addVertices(this.maze[i][j].getId(), this.maze[i-1][j].getId(), 1);
             }
         }
+    }
+
+    /**
+     * Restituisce la dimensione del labirinto.
+     * @return la dimensione del labirinto
+     */
+    public Integer getDim() {
+        return this.dim;
     }
 }

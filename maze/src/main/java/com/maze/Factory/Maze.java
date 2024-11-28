@@ -1,7 +1,7 @@
 package com.maze.Factory;
 
-import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.maze.Graph.Edge;
@@ -89,7 +89,7 @@ public abstract class Maze implements IMaze {
      * Restituisce il labirinto sotto forma di grafo senza muri
      * @return di tipo map<Integer, List<Edge>> il grafo del labirinto
      */
-    public Map<Integer, List<Edge>> getVertices(){
+    public Map<Integer, ArrayList<Edge>> getVertices(){
         return this.emptyBox.getVertices();
     }
 

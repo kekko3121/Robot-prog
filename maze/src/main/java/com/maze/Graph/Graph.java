@@ -2,7 +2,6 @@ package com.maze.Graph;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 /**
  * Classe Grafo generica astratta, contiene i metodi base di gestione
@@ -11,7 +10,7 @@ import java.util.Map;
 public abstract class Graph<T> {
     
     // Mappa dei vertici con la lista dei loro archi
-    private Map<Integer, List<Edge>> vertices; //
+    private Map<Integer, ArrayList<Edge>> vertices; //
 
     // Costruttore per inizializare la mappa
     Graph(){
@@ -25,7 +24,7 @@ public abstract class Graph<T> {
      * @param dest il nodo di destinazione dell'arco
      * @param weight il peso dell'arco
      */
-    public void addVertices(Integer source, Integer dest, int weight){
+    public void addVertices(Integer source, Integer dest, Integer weight){
         this.vertices.putIfAbsent(dest, new ArrayList<>());
         this.vertices.get(source).add(new Edge(dest, weight));
     }
@@ -36,7 +35,7 @@ public abstract class Graph<T> {
      * (List<Edge>) che rappresenta i collegamenti con i nodi adiacenti.
      * @return una mappa in cui le chiavi sono i nodi del grafo e i valori sono le liste degli archi adiacenti.
      */
-    public Map<Integer, List<Edge>> getVertices(){
+    public Map<Integer, ArrayList<Edge>> getVertices(){
         return this.vertices;
     }
 
@@ -48,7 +47,7 @@ public abstract class Graph<T> {
      * @return una lista di oggetti Edge rappresentanti gli archi adiacenti al nodo;
      *         se il nodo non esiste, restituisce una lista vuota.
      */
-    public List<Edge> getEdges(int node) {
+    public ArrayList<Edge> getEdges(int node) {
         return this.vertices.getOrDefault(node, new ArrayList<>());
     }
 
