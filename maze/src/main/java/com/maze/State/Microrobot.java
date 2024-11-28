@@ -1,33 +1,34 @@
 package com.maze.State;
 
+import com.maze.Interactors.Box;
 import com.maze.Interactors.Position;
-import com.maze.Strategy.IStrategy;
+import com.maze.Interactors.ValueBox;
 
 /**
  * Classe che rappresenta un microrobot nel labirinto.
  */
 public class Microrobot {
     
-    private IStrategy microRobotStrategy; // Strategia del microrobot
+    private IState microRobotState; // Stato attuale del microrobot
 
-    private Position actualPosition; // posizione attuale del microrobot
+    private Box box; // cella attuale del microrobot
 
     /**
      * Costruttore della classe per passare la posizione attuale e lo stato del microrobot.
-     * @param actualPosition
-     * @param microRobotState
+     * @param box cella attuale del microrobot
+     * @param microRobotState stato attuale del microrobot
      */
-    public Microrobot(Position actualPosition, IStrategy microRobotStrategy){
-        this.actualPosition = actualPosition;
-        this.microRobotStrategy = microRobotStrategy;
+    public Microrobot(Box box, IState microRobotState){
+        this.box = box;
+        this.microRobotState = microRobotState;
     }
 
     /**
-     * Cambia la posizione del microrobot.
-     * @param microRobotState
+     * Metodo per cambiare lo stato del microrobot.
+     * @param microRobotState nuovo stato del microrobot
      */
-    public void setActualPosition(Position actualPosition){
-        this.actualPosition = actualPosition;
+    public void setActualBox(Box actualBox){
+        this.box = actualBox;
     }
 
     /**
@@ -35,29 +36,48 @@ public class Microrobot {
      * @return
      */
     public Position getPosition(){
-        return this.actualPosition;
+        return this.box.getPosition();
     }
 
     /**
-     * Cambia la strategia del microrobot.
-     * @param microRobotStrategy
-     */
-    public void setMicroRobotStrategy(IStrategy microRobotStrategy){
-        this.microRobotStrategy = microRobotStrategy;
-    }
-
-    /**
-     * Restituisce la strategia del microrobot.
+     * Restituisce la cella attuale del microrobot.
      * @return
      */
-    public IStrategy getMicroRobotStrategy(){
-        return this.microRobotStrategy;
+    public Box getActualBox(){
+        return this.box;
     }
 
     /**
-     * Metodo per muovere il microrobot.
+     * Restituisce il valore della cella attuale del microrobot.
+     * @return
      */
-    public void move(){
-        this.setActualPosition(this.microRobotStrategy.nextMove(this.getPosition()));
+    public ValueBox getActualValueBox(){
+        return this.box.getValue();
+    }
+
+    /**
+     * Cambia lo stato del microrobot.
+     * @param microRobotState
+     */
+    public void setMicroRobotStrate(IStrate microRobotState){
+        this.microRobotState = microRobotState;
+    }
+
+    /**
+     * Restituisce la stato del microrobot.
+     * @return stato del microrobot
+     */
+    public IState getMicroRobotState(){
+        return this.microRobotState;
+    }
+
+    /**
+     * Metodo per richiamare action dello stato del microrobot,
+     * che permette di calcolare la prossima mossa.
+     * @param box cella da cui calcolare la prossima mossa
+     * @return Integer l'id della prossima cella in cui muoversi
+     */
+    public Integer move(Box box){
+        return this.microRobotState.action(box);
     }
 }
