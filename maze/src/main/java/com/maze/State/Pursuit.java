@@ -12,12 +12,10 @@ import com.maze.Strategy.OneMove;
  */
 public class Pursuit implements IState {
 
-    private Box box; // cella in cui si trova il microrobot per calcolare la prossima mossa
     private IStrategy strategy; // strategia che utilizza il microrobot per muoversi
 
-    public Pursuit(Graph<Box> graph, Box box){
+    public Pursuit(Graph<Box> graph){
         this.strategy = new OneMove(graph);
-        this.box = box;
     }
 
     @Override

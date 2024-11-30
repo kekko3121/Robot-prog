@@ -59,7 +59,7 @@ public class Microrobot {
      * Cambia lo stato del microrobot.
      * @param microRobotState
      */
-    public void setMicroRobotStrate(IStrate microRobotState){
+    public void setMicroRobotStrate(IState microRobotState){
         this.microRobotState = microRobotState;
     }
 

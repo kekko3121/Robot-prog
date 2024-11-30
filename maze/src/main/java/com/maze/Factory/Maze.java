@@ -87,10 +87,10 @@ public abstract class Maze implements IMaze {
 
     /**
      * Restituisce il labirinto sotto forma di grafo senza muri
-     * @return di tipo map<Integer, List<Edge>> il grafo del labirinto
+     * @return Graph<box> il grafo del labirinto
      */
-    public Map<Integer, ArrayList<Edge>> getVertices(){
-        return this.emptyBox.getVertices();
+    public Graph<Box> getGraphMaze(){
+        return this.emptyBox;
     }
 
     /**

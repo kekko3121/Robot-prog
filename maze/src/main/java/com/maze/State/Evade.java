@@ -12,12 +12,10 @@ import com.maze.Strategy.RandomMove;
  */
 public class Evade implements IState {
 
-    private Box box; // cella in cui si trova il microrobot per calcolare la prossima mossa
     private IStrategy strategy; // strategia che utilizza il microrobot per muoversi
 
-    public Evade(Graph<Box> graph, Box box){
+    public Evade(Graph<Box> graph){
         this.strategy = new RandomMove(graph);
-        this.box = box;
     }
 
     @Override

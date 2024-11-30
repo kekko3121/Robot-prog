@@ -12,12 +12,10 @@ import com.maze.Strategy.TwoMove;
  */
 public class Flee implements IState {
 
-    private Box box; // cella in cui si trova il microrobot per calcolare la prossima mossa
     private IStrategy strategy; // strategia che utilizza il microrobot per muoversi
 
-    public Flee(Graph<Box> graph, Box box){
+    public Flee(Graph<Box> graph){
         this.strategy = new TwoMove(graph);
-        this.box = box;
     }
 
     @Override

@@ -12,12 +12,10 @@ import com.maze.Strategy.OneMove;
  */
 public class Seek implements IState {
 
-    private Box box; // cella in cui si trova il microrobot per calcolare la prossima mossa
     private IStrategy strategy; // strategia che utilizza il microrobot per muoversi
 
-    public Seek(Graph<Box> graph, Box box){
+    public Seek(Graph<Box> graph){
         this.strategy = new OneMove(graph);
-        this.box = box;
     }
 
     @Override
