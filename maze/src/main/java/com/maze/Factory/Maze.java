@@ -1,10 +1,7 @@
 package com.maze.Factory;
 
-import java.util.Map;
-import java.util.ArrayList;
 import java.util.Random;
 
-import com.maze.Graph.Edge;
 import com.maze.Graph.Graph;
 import com.maze.Graph.GraphMaze;
 import com.maze.Interactors.*;
