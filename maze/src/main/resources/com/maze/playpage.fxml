@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="1040.0" maxWidth="1880.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maze.PlaypageController">
+   <children>
+       <ImageView fitHeight="720.0" fitWidth="1295.0" pickOnBounds="true" preserveRatio="true">
+       <image>
+           <Image url="@../../images/pageplay.png" />
+       </image>
+       </ImageView>
+      
+      <ChoiceBox fx:id="level" layoutX="568.0" layoutY="324.0" prefWidth="150.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Easy" />
+               <String fx:value="Medium" />
+               <String fx:value="Hard" />
+
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+      <TextField fx:id="name" layoutX="184.0" layoutY="647.0" onKeyTyped="#controllerText1" />
+      <TextField fx:id="surname" layoutX="913.0" layoutY="647.0" onKeyTyped="#controllerText1" />
+      
+
+       <Button fx:id="readyButton" disable="true" layoutX="437.0" layoutY="386.0" mnemonicParsing="false" onAction="#goReady" prefHeight="81.0" prefWidth="446.0" text="Button">
+           <effect>
+               <ImageInput>
+                   <source>
+                       <Image url="@../../images/ready_botton.png" />
+                   </source>
+               </ImageInput>
+           </effect>
+       </Button>
+
+       <Button fx:id="returnButton" layoutX="1035.0" layoutY="14.0" mnemonicParsing="false" onAction="#returntoHome" prefHeight="153.0" prefWidth="239.0" text="Button">
+           <effect>
+               <ImageInput>
+                   <source>
+                       <Image url="@../../images/return_button.png" />
+                   </source>
+               </ImageInput>
+           </effect>
+       </Button>
+   </children>
+
+
+
+</AnchorPane>
