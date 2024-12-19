@@ -1,7 +1,7 @@
 package com.maze.Graph;
 
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 /**
  * Classe Grafo generica astratta, contiene i metodi base di gestione
@@ -10,11 +10,11 @@ import java.util.Map;
 public abstract class Graph<T> {
     
     // Mappa dei vertici con la lista dei loro archi
-    private Map<Integer, ArrayList<Edge>> vertices; //
+    private Map<Integer, ArrayList<Edge>> edge; //
 
     // Costruttore per inizializare la mappa
     Graph(){
-        vertices = new HashMap<>();
+        edge = new HashMap<>();
     }
 
     /**
@@ -24,9 +24,11 @@ public abstract class Graph<T> {
      * @param dest il nodo di destinazione dell'arco
      * @param weight il peso dell'arco
      */
-    public void addVertices(Integer source, Integer dest, Integer weight){
-        this.vertices.putIfAbsent(dest, new ArrayList<>());
-        this.vertices.get(source).add(new Edge(dest, weight));
+    public void addEdge(Integer source, Integer dest, Integer weight){
+        // Inizializza la lista di adiacenza per source se non esiste già
+        edge.computeIfAbsent(source, k -> new ArrayList<>()).add(new Edge(dest, weight));
+        // Inizializza la lista di adiacenza per dest se non esiste già
+        edge.putIfAbsent(dest, new ArrayList<>());
     }
 
     /**
@@ -35,20 +37,8 @@ public abstract class Graph<T> {
      * (List<Edge>) che rappresenta i collegamenti con i nodi adiacenti.
      * @return una mappa in cui le chiavi sono i nodi del grafo e i valori sono le liste degli archi adiacenti.
      */
-    public Map<Integer, ArrayList<Edge>> getVertices(){
-        return this.vertices;
-    }
-
-    /**
-     * Restituisce la lista di archi (edge) adiacenti a un dato nodo.
-     * Se il nodo specificato non ha archi associati o non è presente nel grafo,
-     * restituisce una lista vuota.
-     * @param node il nodo di cui ottenere la lista degli archi
-     * @return una lista di oggetti Edge rappresentanti gli archi adiacenti al nodo;
-     *         se il nodo non esiste, restituisce una lista vuota.
-     */
-    public ArrayList<Edge> getEdges(int node) {
-        return this.vertices.getOrDefault(node, new ArrayList<>());
+    public Map<Integer, ArrayList<Edge>> getEdge(){
+        return this.edge;
     }
 
     /**

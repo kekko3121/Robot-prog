@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.maze.Dijkstra.Dijkstra;
 import com.maze.Graph.Graph;
-import com.maze.Interactors.*;
+import com.maze.Interactors.Box;
 
 /**
  * Classe per calcolare il prossimo movimento del microrobot, implementa Dijkstra per
@@ -30,13 +30,11 @@ public class OneMove implements IStrategy{
      */
     public Integer nextMove(Box currentBox){
         ArrayList<Integer> pathToExit; // percorso per uscire dal labirinto
-        int solution;  // prossima posizione del microrobot
 
         do{
             pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), dijkstra.getNodes() - 1);
-        }while(!pathToExit.isEmpty()); //cercami un cammino fintanto che non ne trovi uno
-
-        solution = pathToExit.get(1); // Rimuove e restituisce il primo elemento del percorso
-        return solution;
+        }while(pathToExit.size() == 0); //cercami un cammino fintanto che non ne trovi uno
+        
+        return pathToExit.get(1); // Rimuove e restituisce il primo elemento del percorso
     }
 }

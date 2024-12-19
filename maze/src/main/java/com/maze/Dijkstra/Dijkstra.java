@@ -36,42 +36,30 @@ public class Dijkstra {
      * @return una lista contenente la distanza minima dal nodo sorgente a ciascun nodo
      */
     public ArrayList<Integer> calculateShortestPath(Integer source, Integer dest) {
-        int numNodes = graph.getVertices().size();
+        int n = graph.getEdge().size();
+        distances = new ArrayList<>(Collections.nCopies(n, Integer.MAX_VALUE));
+        previousNodes = new ArrayList<>(Collections.nCopies(n, -1));
+        distances.set(source, 0);
 
-        // Inizializzazione delle distanze a infinito
-        distances.clear();
-        previousNodes.clear();
-        for (int i = 0; i < numNodes; i++) {
-            distances.add(Integer.MAX_VALUE);
-            previousNodes.add(null);
-        }
-        distances.set(source, 0); // Distanza del nodo sorgente
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(distances::get));
+        pq.add(source);
 
-        // Coda di priorità per gestire i nodi da elaborare, ordinati per distanza
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(distances::get));
-        priorityQueue.add(source);
+        while (!pq.isEmpty()) {
+            int current = pq.poll();
+            if (current == dest) break;
 
-        while (!priorityQueue.isEmpty()) {
-            int currentNodeId = priorityQueue.poll();
-
-            // Se raggiungiamo il nodo di destinazione, possiamo terminare
-            if (currentNodeId == dest) break;
-
-            // Processa ciascun vicino del nodo corrente
-            for (Edge edge : graph.getEdges(currentNodeId)) {
-                int neighborId = edge.getDest();
-                int newDist = distances.get(currentNodeId) + edge.getWeight();
-
-                // Aggiorna la distanza se un percorso più breve viene trovato
-                if (newDist < distances.get(neighborId)) {
-                    distances.set(neighborId, newDist);
-                    previousNodes.set(neighborId, currentNodeId);
-                    priorityQueue.add(neighborId);
+            for (Edge edge : graph.getEdge().get(current)) {
+                int neighbor = edge.getDest();
+                int newDist = distances.get(current) + edge.getWeight();
+                if (newDist < distances.get(neighbor)) {
+                    distances.set(neighbor, newDist);
+                    previousNodes.set(neighbor, current);
+                    pq.add(neighbor);
                 }
             }
         }
 
-        return distances;
+        return getShortestPath(dest);
     }
 
     /**
@@ -81,7 +69,10 @@ public class Dijkstra {
      */
     public ArrayList<Integer> getShortestPath(Integer destination) {
         ArrayList<Integer> path = new ArrayList<>();
-        for (Integer at = destination; at != null; at = previousNodes.get(at)) {
+        if (destination < 0 || destination >= previousNodes.size()) {
+            return path; // Restituisce un percorso vuoto se l'indice è fuori dai limiti
+        }
+        for (Integer at = destination; at != -1; at = previousNodes.get(at)) {
             path.add(at);
         }
         Collections.reverse(path);
@@ -89,6 +80,6 @@ public class Dijkstra {
     }
 
     public int getNodes() {
-        return graph.getVertices().size();
+        return graph.getEdge().size();
     }
 }

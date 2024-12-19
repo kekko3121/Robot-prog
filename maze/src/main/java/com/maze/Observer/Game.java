@@ -42,6 +42,7 @@ public class Game implements Observable {
 
         this.microrobot = new Microrobot(maze.getBoxById(0), new Pursuit(maze.getGraphMaze()));// inizializza la lista dei microrobot
         observers = new ArrayList<>(); // inizializza la lista degli osservatori
+        firstMove = true; // inizializza il primo movimento del microrobot
     }
 
     /**
@@ -72,7 +73,7 @@ public class Game implements Observable {
     /*
      * Metodo per restituire la posizione di un microrobot
      */
-    public Position getMicrorobotPosition(int i){
+    public Position getMicrorobotPosition(){
         return this.microrobot.getPosition();
     }
 
@@ -146,36 +147,28 @@ public class Game implements Observable {
         //se la cella attuale e' verde, cambia stato in "Pursuit" e calcola la prossima mossa;
         //aggiorna poi la posizione corrente del robot.
         else if (this.microrobot.getActualValueBox() == ValueBox.GREEN) {
-
             this.microrobot.setMicroRobotStrate(new Pursuit(this.maze.getGraphMaze())); //cambia lo stato del microrobot
             this.microrobot.setActualBox(this.maze.getBoxById(move())); //aggiorna la posizione corrente del robot
-
         }
 
         //se la cella attuale e' rossa, cambia stato in "Seek" e calcola la prossima mossa;
         //aggiorna poi la posizione corrente del robot.
         else if (this.microrobot.getActualValueBox() == ValueBox.RED) {
-
             this.microrobot.setMicroRobotStrate(new Seek(this.maze.getGraphMaze())); //cambia lo stato del microrobot
             this.microrobot.setActualBox(this.maze.getBoxById(move())); //aggiorna la posizione corrente del robot
-
         }
 
         //se la cella attuale e' gialla, cambia stato in "Flee" e calcola la prossima mossa;
         //aggiorna poi la posizione corrente del robot.
         else if (this.microrobot.getActualValueBox() == ValueBox.YELLOW) {
-
             this.microrobot.setMicroRobotStrate(new Flee(this.maze.getGraphMaze())); //cambia lo stato del microrobot
             this.microrobot.setActualBox(this.maze.getBoxById(move())); //aggiorna la posizione corrente del robot
-
         }
         //se la cella attuale e' ciano, cambia stato in "EvadeState" e calcola la prossima mossa;
         //aggiorna poi la posizione corrente del robot.
         else if (this.microrobot.getActualValueBox() == ValueBox.CYAN) {
-
             this.microrobot.setMicroRobotStrate(new Flee(this.maze.getGraphMaze())); //cambia lo stato del microrobot
             this.microrobot.setActualBox(this.maze.getBoxById(move())); //aggiorna la posizione corrente del robot
-
         }
     }
 }

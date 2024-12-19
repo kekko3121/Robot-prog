@@ -4,19 +4,19 @@ package com.maze.Graph;
  * Classe per rappresentare un singolo arco in un grafo orientato e ponderato
  */
 public class Edge {
-    private final int dest; // Nodo di destinazione
-    private final int weight; // Peso dell'arco
+    private final Integer dest; // Nodo di destinazione
+    private final Integer weight; // Peso dell'arco
 
-    public Edge(int dest, int weight){
+    public Edge(Integer dest, Integer weight){
         this.dest = dest;
         this.weight = weight;
     }
 
-    public int getDest(){
+    public Integer getDest(){
         return dest;
     }
 
-    public int getWeight(){
+    public Integer getWeight(){
         return weight;
     }
 }

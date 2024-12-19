@@ -29,7 +29,7 @@ public class TwoMove implements IStrategy {
 
         do{
             pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), dijkstra.getNodes() - 1);
-        }while(!pathToExit.isEmpty()); //cercami un cammino fintanto che non ne trovi uno
+        }while(pathToExit.size() == 0); //cercami un cammino fintanto che non ne trovi uno
 
         if(size < pathToExit.size()){
             return pathToExit.get(size);
@@ -39,5 +39,4 @@ public class TwoMove implements IStrategy {
             return pathToExit.get(size - 1);
         }
     }
-    
 }

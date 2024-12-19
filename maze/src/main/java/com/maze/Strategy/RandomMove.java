@@ -5,10 +5,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.maze.Graph.Edge;
 import com.maze.Graph.Graph;
-import com.maze.Graph.GraphMaze;
 import com.maze.Interactors.Box;
 /**
- * Strategia di movimento casuale per il robot, consente al robot di
+ * Strategia di movimento casuale per il microrobot, consente al microrobot di
  * muoversi casualmente in una cella adiacente a quella attuale.
  */
 public class RandomMove implements IStrategy {
@@ -31,17 +30,15 @@ public class RandomMove implements IStrategy {
     @Override
     public Integer nextMove(Box currentBox) {
 
-        // Ottiene la posizione attuale del robot e calcola i vicini della casella attuale
-        ArrayList<Edge> edges = graph.getEdges(currentBox.getPosition().getX() * ((GraphMaze) graph).getDim() + currentBox.getPosition().getY());
+        // Ottiene la lista degli archi adiacenti alla casella attuale
+        ArrayList<Edge> edges = graph.getEdge().get(currentBox.getId());
+        // Crea una lista di ID dei nodi adiacenti
         ArrayList<Integer> neighbors = new ArrayList<>();
         for (Edge edge : edges) {
             neighbors.add(edge.getDest());
         }
 
         // Scegli un vicino casuale
-        int randomIndex = ThreadLocalRandom.current().nextInt(0, neighbors.size());
-
-        // Restituisci l'ID del nodo scelto
-        return neighbors.get(randomIndex);
+        return neighbors.get(ThreadLocalRandom.current().nextInt(0, neighbors.size()));
     }
 }
