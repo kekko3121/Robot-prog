@@ -40,14 +40,14 @@ public class Dijkstra {
         distances = new ArrayList<>(Collections.nCopies(n, Integer.MAX_VALUE));
         previousNodes = new ArrayList<>(Collections.nCopies(n, -1));
         distances.set(source, 0);
-
+    
         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(distances::get));
         pq.add(source);
-
+    
         while (!pq.isEmpty()) {
             int current = pq.poll();
             if (current == dest) break;
-
+    
             for (Edge edge : graph.getEdge().get(current)) {
                 int neighbor = edge.getDest();
                 int newDist = distances.get(current) + edge.getWeight();
@@ -58,9 +58,9 @@ public class Dijkstra {
                 }
             }
         }
-
+    
         return getShortestPath(dest);
-    }
+    }    
 
     /**
      * Restituisce il percorso più breve dal nodo sorgente al nodo di destinazione.
@@ -80,6 +80,6 @@ public class Dijkstra {
     }
 
     public int getNodes() {
-        return graph.getEdge().size();
+        return graph.getNodes();
     }
 }

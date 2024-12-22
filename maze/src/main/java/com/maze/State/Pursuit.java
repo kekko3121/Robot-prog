@@ -14,8 +14,8 @@ public class Pursuit implements IState {
 
     private IStrategy strategy; // strategia che utilizza il microrobot per muoversi
 
-    public Pursuit(Graph<Box> graph){
-        this.strategy = new OneMove(graph);
+    public Pursuit(Graph<Box> graph, Integer exitMazeId) {
+        this.strategy = new OneMove(graph, exitMazeId);
     }
 
     @Override

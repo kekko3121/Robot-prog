@@ -42,6 +42,14 @@ public abstract class Graph<T> {
     }
 
     /**
+     * Restituisce il numero di nodi del grafo.
+     * @return il numero di nodi del grafo
+     */
+    public int getNodes(){
+        return this.edge.keySet().size();
+    }
+
+    /**
      * Metodo astratto per restituire il nodo da ridefinire
      * @param index
      * @return nodi del grafo del tipo scelto

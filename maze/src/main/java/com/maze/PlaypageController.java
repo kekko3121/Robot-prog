@@ -31,10 +31,18 @@ public class PlaypageController {
 
     @FXML
     private void goReady(ActionEvent event) {
-        // Passa alla scena score.fxml
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("score.fxml"));
-            Parent root = fxmlLoader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("score.fxml")); // Use the correct FXML file
+            Parent root = loader.load();
+
+            // Riceve il controller dello score
+            ScoreController scoreController = loader.getController();
+
+            // Crea un oggetto PlayerProperty con i dati inseriti dall'utente
+            PlayerProperty playerProperty = new PlayerProperty(name.getText() + " " + surname.getText(), "0");
+            scoreController.setDifficulty(level.getValue());
+
+            // Show the new scene
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

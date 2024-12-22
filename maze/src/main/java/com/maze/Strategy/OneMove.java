@@ -15,12 +15,15 @@ public class OneMove implements IStrategy{
     
     private Dijkstra dijkstra; // algoritmo Djikstra
 
+    private Integer exitMazeId; // id della cella di uscita
+
     /**
      * Costruttore della classe per passare il grafo e la posizione di uscita.
      * @param maze il grafo del labirinto
      */
-    public OneMove(Graph<Box> graph){
+    public OneMove(Graph<Box> graph, Integer exitMazeId){
         dijkstra = new Dijkstra(graph);
+        this.exitMazeId = exitMazeId;
     }
 
      /**
@@ -32,7 +35,7 @@ public class OneMove implements IStrategy{
         ArrayList<Integer> pathToExit; // percorso per uscire dal labirinto
 
         do{
-            pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), dijkstra.getNodes() - 1);
+            pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), exitMazeId);
         }while(pathToExit.size() == 0); //cercami un cammino fintanto che non ne trovi uno
         
         return pathToExit.get(1); // Rimuove e restituisce il primo elemento del percorso

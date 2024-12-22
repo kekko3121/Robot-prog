@@ -14,8 +14,8 @@ public class Flee implements IState {
 
     private IStrategy strategy; // strategia che utilizza il microrobot per muoversi
 
-    public Flee(Graph<Box> graph){
-        this.strategy = new TwoMove(graph);
+    public Flee(Graph<Box> graph, Integer exitMazeId){
+        this.strategy = new TwoMove(graph, exitMazeId);
     }
 
     @Override

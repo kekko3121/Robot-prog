@@ -35,7 +35,7 @@ public class RandomMove implements IStrategy {
         // Crea una lista di ID dei nodi adiacenti
         ArrayList<Integer> neighbors = new ArrayList<>();
         for (Edge edge : edges) {
-            neighbors.add(edge.getDest());
+            neighbors.add(edge.getDest()); // Aggiunge l'ID del nodo adiacente
         }
 
         // Scegli un vicino casuale

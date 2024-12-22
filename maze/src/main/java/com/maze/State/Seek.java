@@ -14,8 +14,8 @@ public class Seek implements IState {
 
     private IStrategy strategy; // strategia che utilizza il microrobot per muoversi
 
-    public Seek(Graph<Box> graph){
-        this.strategy = new OneMove(graph);
+    public Seek(Graph<Box> graph, Integer exitMazeId){
+        this.strategy = new OneMove(graph, exitMazeId);
     }
 
     @Override

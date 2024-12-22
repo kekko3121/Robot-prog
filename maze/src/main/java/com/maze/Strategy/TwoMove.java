@@ -10,12 +10,15 @@ public class TwoMove implements IStrategy {
 
     private Dijkstra dijkstra; // algoritmo Djikstra
 
+    private Integer exitMazeId; // id della cella di uscita
+
     /**
      * Costruttore della classe per passare il grafo e la posizione di uscita.
      * @param maze il grafo del labirinto
      */
-    public TwoMove(Graph<Box> graph) {
+    public TwoMove(Graph<Box> graph, Integer exitMazeId){
         dijkstra = new Dijkstra(graph);
+        this.exitMazeId = exitMazeId;
     }
 
     /**
@@ -28,7 +31,7 @@ public class TwoMove implements IStrategy {
         int size = 2;  // prossima posizione del microrobot
 
         do{
-            pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), dijkstra.getNodes() - 1);
+            pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), exitMazeId);
         }while(pathToExit.size() == 0); //cercami un cammino fintanto che non ne trovi uno
 
         if(size < pathToExit.size()){
