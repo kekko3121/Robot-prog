@@ -34,12 +34,17 @@ public class TwoMove implements IStrategy {
             pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), exitMazeId);
         }while(pathToExit.size() == 0); //cercami un cammino fintanto che non ne trovi uno
 
-        if(size < pathToExit.size()){
+        //Verifica che il percorso contenga almeno due celle
+        if(pathToExit.size() > size){
             return pathToExit.get(size);
         }
 
+        else if(pathToExit.size() > 1){
+            return pathToExit.get(1);
+        }
+
         else{
-            return pathToExit.get(size - 1);
+            return currentBox.getId();
         }
     }
 }

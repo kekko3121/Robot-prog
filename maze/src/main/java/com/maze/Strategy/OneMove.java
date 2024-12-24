@@ -37,7 +37,12 @@ public class OneMove implements IStrategy{
         do{
             pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), exitMazeId);
         }while(pathToExit.size() == 0); //cercami un cammino fintanto che non ne trovi uno
+
+        //Verifica che il percorso contenga almeno due celle
+        if(pathToExit.size() > 1) {
+            return pathToExit.get(1); // Rimuove e restituisce il primo elemento del percorso
+        }
         
-        return pathToExit.get(1); // Rimuove e restituisce il primo elemento del percorso
+        return currentBox.getId(); //Resta nella stessa posizione se non ci sono altre celle
     }
 }

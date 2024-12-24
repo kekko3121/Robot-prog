@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import com.maze.Observer.Game;
 import com.maze.Observer.UpdateGame;
+import com.maze.Proxy.Classification;
 import com.maze.Interactors.Box;
 import com.maze.Interactors.Hardships;
 import com.maze.Interactors.Position;
@@ -27,7 +28,16 @@ public class MazeController {
     private Pane mazePane;
 
     @FXML
-    private Label timerLabel;
+    private Label Name;
+
+    @FXML
+    private Label Surname;
+
+    @FXML
+    private Label RobotState;
+
+    @FXML
+    private Label Time;
 
     @FXML
     private ArrayList<Rectangle> mazeView;
@@ -43,13 +53,29 @@ public class MazeController {
     
     private Timeline timeline;
 
+    private Timeline timerTimeline;
+
+    private String playerTime;
+
     private String difficulty;
+    
+    private PlayerProperty playerProperty;
+
+    private long startTime;
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
+    public void setPlayerProperty(PlayerProperty playerProperty) {
+        this.playerProperty = playerProperty;
+    }
+
     public void initializeGame() {
+
+        Name.setText(playerProperty.getPlayerName());
+        Surname.setText(playerProperty.getPlayerSurname());
+
         // Inizializza il labirinto e il gioco
         if (difficulty.equals("Easy")) {
             instance = new Game(Hardships.EASY);
@@ -65,20 +91,23 @@ public class MazeController {
         buildMaze(instance.getExitPosition());
         
         // Crea e imposta il rettangolo del microrobot con l'immagine
-        microrobot = new Rectangle(50, 50);
+        microrobot = new Rectangle(37, 37);
         microrobot.setFill(new ImagePattern(new Image(getClass().getResourceAsStream("/images/microrobot.png"))));
         mazePane.getChildren().add(microrobot);
 
         // Posiziona il microrobot all'inizio del labirinto
-        microrobot.setLayoutX(instance.getMicrorobotPosition().getX() * 50);
-        microrobot.setLayoutY(instance.getMicrorobotPosition().getY() * 50);
+        microrobot.setLayoutX(instance.getMicrorobotPosition().getX() * 37);
+        microrobot.setLayoutY(instance.getMicrorobotPosition().getY() * 37);
 
         // Inizia il gioco
         startGame();
     }
 
     private void startGame() {
-        instance.subscribe(gameStateSub);
+        instance.subscribe(gameStateSub); // Iscrive l'osservatore al gioco
+
+        // Salva il tempo di inizio in millisecondi
+        startTime = System.currentTimeMillis();
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
             instance.notifyObservers();
@@ -87,9 +116,9 @@ public class MazeController {
             maze = gameStateSub.getMaze();
             this.updateMazeView(); // Aggiorna la vista del labirinto
             instance.notifyObservers();
+            RobotState.setText(gameStateSub.getState());
 
-            if (instance.getMicrorobotPosition() == instance.getExitPosition()) {
-                System.out.println("Game Over");
+            if (instance.getMicrorobotPosition().getX() == instance.getExitPosition().getX() && instance.getMicrorobotPosition().getY() == instance.getExitPosition().getY()) {
                 try {
                     this.afterGame();
                 } catch (IOException e) {
@@ -97,12 +126,30 @@ public class MazeController {
                 }
             }
 
-            microrobot.setLayoutX(microrobot.getLayoutX() + (gameStateSub.getUpdate().getY() * 50)); // Aggiorna la posizione del microrobot sull'asse x
-            microrobot.setLayoutY(microrobot.getLayoutY() + (gameStateSub.getUpdate().getX() * 50)); // Aggiorna la posizione del microrobot sull'asse y
+            microrobot.setLayoutX(microrobot.getLayoutX() + (gameStateSub.getUpdate().getY() * 37)); // Aggiorna la posizione del microrobot sull'asse x
+            microrobot.setLayoutY(microrobot.getLayoutY() + (gameStateSub.getUpdate().getX() * 37)); // Aggiorna la posizione del microrobot sull'asse y
         }));
 
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
+        // Timeline per aggiornare il timer
+        timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            // Calcola il tempo trascorso
+            long elapsedMillis = System.currentTimeMillis() - startTime;
+            long elapsedSeconds = elapsedMillis / 1000;
+            long hours = elapsedSeconds / 3600;
+            long minutes = (elapsedSeconds % 3600) / 60;
+            long seconds = elapsedSeconds % 60;
+
+            playerTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+ 
+            // Aggiorna la label del tempo
+            Time.setText(playerTime);
+        }));
+
+        timerTimeline.setCycleCount(Animation.INDEFINITE);
+        timerTimeline.play();
     }
 
     private void updateMazeView() {
@@ -138,7 +185,17 @@ public class MazeController {
 
     private void afterGame() throws IOException {
         timeline.stop();
-        // Implementa la logica per gestire la fine del gioco
+        timerTimeline.stop();
+        insertPlayerData(playerProperty.getPlayerName(), playerProperty.getPlayerSurname(), playerTime);
+    }
+
+    private void insertPlayerData(String name, String surname, String time) {
+        try {
+            Classification classification = new Classification("score.dat", name, surname, time);
+            classification.write();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void buildMaze(Position exPosition) {
@@ -147,7 +204,7 @@ public class MazeController {
         // Disegna il labirinto interno
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                Rectangle rect = new Rectangle(50, 50);
+                Rectangle rect = new Rectangle(37, 37);
                 if (maze[i][j].getValue() == ValueBox.WALL) {
                     rect.setFill(Color.BLACK); // Parete interna
                     rect.setStroke(Color.BLACK); // Bordo nero
@@ -159,23 +216,25 @@ public class MazeController {
                 }
                 mazeView.add(rect);
                 mazePane.getChildren().add(rect);
-                rect.setX(j * 50);
-                rect.setY(i * 50);
+                rect.setX(j * 37);
+                rect.setY(i * 37);
             }
         }
         // Disegna i muri esterni attorno al labirinto interno
         for (int i = -1; i <= size; i++) {
             for (int j = -1; j <= size; j++) {
                 if ( (i == -1 || i == size || j == -1 || j == size) && !(i == exPosition.getX() - 1 && j == exPosition.getY() - 1)) {
-                    Rectangle rect = new Rectangle(50, 50);
+                    Rectangle rect = new Rectangle(37, 37);
                     rect.setFill(Color.GRAY); // Colore dei muri esterni
                     rect.setStroke(Color.BLACK); // Bordo nero
                     rect.setStrokeWidth(1.0);
                     mazePane.getChildren().add(rect);
-                    rect.setX(j * 50);
-                    rect.setY(i * 50);
+                    rect.setX(j * 37);
+                    rect.setY(i * 37);
                 }
             }
         }
     }
+
+
 }

@@ -64,7 +64,7 @@ public class UpdateGame implements PositionSub {
      * @return
      */
     public int getDim(){
-        return this.dim;
+        return dim;
     }
 
     /**
@@ -72,17 +72,17 @@ public class UpdateGame implements PositionSub {
      * @return
      */
     public Box[][] getMaze(){
-        return this.maze;
+        return maze;
     }
 
     public String getState() {
         if(state instanceof Pursuit)
-            return "Robot state: Pursuit";
+            return "Pursuit";
         else if(state instanceof Seek)
-            return "Robot state: Seek";
+            return "Seek";
         else if(state instanceof Flee)
-            return "Robot state: Flee";
+            return "Flee";
         else
-            return "Robot state: Evade";
+            return "Evade";
     }
 }

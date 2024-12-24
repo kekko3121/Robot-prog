@@ -39,8 +39,9 @@ public class PlaypageController {
             ScoreController scoreController = loader.getController();
 
             // Crea un oggetto PlayerProperty con i dati inseriti dall'utente
-            PlayerProperty playerProperty = new PlayerProperty(name.getText() + " " + surname.getText(), "0");
+            PlayerProperty playerProperty = new PlayerProperty(name.getText(), surname.getText());
             scoreController.setDifficulty(level.getValue());
+            scoreController.setPlayerProperty(playerProperty);
 
             // Show the new scene
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

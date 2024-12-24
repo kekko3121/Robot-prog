@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.maze.Factory.Maze;
 import com.maze.Factory.MazeDifficulty;
+import com.maze.State.Evade;
 import com.maze.State.Flee;
 import com.maze.State.Microrobot;
 import com.maze.State.Pursuit;
@@ -58,7 +59,7 @@ public class Game implements Observable {
      */
     public void notifyObservers() {
         for (PositionSub observer : observers) {
-            observer.update(this.microrobot.getPosition(), this.maze.getMaze(), this.maze.getDim(),this.microrobot.getMicroRobotState());
+            observer.update(this.microrobot.getPosition(), this.getMaze(), this.maze.getDim(), this.microrobot.getMicroRobotState());
         }
     }
 
@@ -89,7 +90,7 @@ public class Game implements Observable {
      * @return uscita del labirinto
      */
     public Position getExitPosition() {
-        return maze.getExitMaze();
+        return this.maze.getExitMaze();
     }
 
     /**
@@ -97,6 +98,7 @@ public class Game implements Observable {
      * Scorre la matrice e assegna, per ogni cella, un nuovo colore, 
      * in base a una probabilita'.*/
     public void updateCells(){
+        int random;
         Box[][] maze = this.maze.getMaze();
         for(int i = 0; i < this.maze.getDim(); i++){
             for(int j = 0; j < this.maze.getDim(); j++) {
@@ -110,20 +112,20 @@ public class Game implements Observable {
                }
 
                 if (maze[i][j].getValue() != ValueBox.WALL && maze[i][j] != maze[this.maze.getDim() - 1][this.maze.getDim() - 1]) {
-                    int randomNum = ThreadLocalRandom.current().nextInt(0, 12);
-                    if (randomNum < 4){
+                    random = ThreadLocalRandom.current().nextInt(0, 12);
+                    if (random < 4){
                         maze[i][j].setValue(ValueBox.EMPTY);
                     }
-                    else if (randomNum < 6){
+                    else if (random < 6){
                         maze[i][j].setValue(ValueBox.YELLOW);
                     }
-                    else if (randomNum < 8){
+                    else if (random < 8){
                         maze[i][j].setValue(ValueBox.RED);
                     }
-                    else if (randomNum < 10){
+                    else if (random < 10){
                         maze[i][j].setValue(ValueBox.CYAN);
                     }
-                    else if (randomNum < 12){
+                    else if (random < 12){
                         maze[i][j].setValue(ValueBox.GREEN);
                     }
                 }
@@ -164,10 +166,10 @@ public class Game implements Observable {
             this.microrobot.setMicroRobotStrate(new Flee(this.maze.getGraphMaze(), this.maze.getBox(this.maze.getExitMaze().getX(), this.maze.getExitMaze().getY()).getId())); //cambia lo stato del microrobot
             this.microrobot.setActualBox(this.maze.getBoxById(move())); //aggiorna la posizione corrente del robot
         }
-        //se la cella attuale e' ciano, cambia stato in "EvadeState" e calcola la prossima mossa;
+        //se la cella attuale e' ciano, cambia stato in "Evade" e calcola la prossima mossa;
         //aggiorna poi la posizione corrente del robot.
         else if (this.microrobot.getActualValueBox() == ValueBox.CYAN) {
-            this.microrobot.setMicroRobotStrate(new Flee(this.maze.getGraphMaze(), this.maze.getBox(this.maze.getExitMaze().getX(), this.maze.getExitMaze().getY()).getId())); //cambia lo stato del microrobot
+            this.microrobot.setMicroRobotStrate(new Evade(this.maze.getGraphMaze())); //cambia lo stato del microrobot
             this.microrobot.setActualBox(this.maze.getBoxById(move())); //aggiorna la posizione corrente del robot
         }
     }

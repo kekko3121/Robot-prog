@@ -101,13 +101,13 @@ public class Classification implements IFile {
             }
 
             if (map.containsKey(name + " " + surname)) { // se il giocatore è già presente
-                if (Integer.parseInt(map.get(name + " " + surname)) <= Integer.parseInt(time)) { // se il tempo è maggiore
+                if (compareTimes(map.get(name + " " + surname), time) <= 0) { // se il tempo è maggiore
                     return true; // non fare nulla
                 } else { // altrimenti aggiorna il tempo
                     lineFile.remove(a); // togli il vecchio tempo dalla lista
                     int index = 0;
                     for (String[] s : lineFile) {
-                        if (Integer.parseInt(s[1]) > Integer.parseInt(time)) // trova il nuovo posto in classifica
+                        if (compareTimes(s[1], time) > 0) // trova il nuovo posto in classifica
                             break;
                         index++;
                     }
@@ -129,7 +129,7 @@ public class Classification implements IFile {
             } else { // altrimenti trova comunque il suo posto nella classifica
                 int index = 0;
                 for (String[] s : lineFile) {
-                    if (Integer.parseInt(s[1]) > Integer.parseInt(time))
+                    if (compareTimes(s[1], time) > 0)
                         break;
                     index++;
                 }
@@ -150,6 +150,14 @@ public class Classification implements IFile {
                 return true;
             }
         }
+    }
+
+    private int compareTimes(String time1, String time2) {
+        String[] parts1 = time1.split(":");
+        String[] parts2 = time2.split(":");
+        int seconds1 = Integer.parseInt(parts1[0]) * 3600 + Integer.parseInt(parts1[1]) * 60 + Integer.parseInt(parts1[2]);
+        int seconds2 = Integer.parseInt(parts2[0]) * 3600 + Integer.parseInt(parts2[1]) * 60 + Integer.parseInt(parts2[2]);
+        return Integer.compare(seconds1, seconds2);
     }
 
     /**

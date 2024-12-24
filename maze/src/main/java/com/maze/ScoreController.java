@@ -1,6 +1,9 @@
 package com.maze;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import com.maze.Proxy.Classification;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,19 +38,41 @@ public class ScoreController {
 
     private String difficulty;
 
+    private PlayerProperty playerProperty;
+
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
+    public void setPlayerProperty(PlayerProperty playerProperty) {
+        this.playerProperty = playerProperty;
+    }
+
     @FXML
     private void initialize() {
-        // Inizializza i valori delle etichette e della barra di progresso
-        first.setText("Player 1: 100");
-        second.setText("Player 2: 90");
-        third.setText("Player 3: 80");
-        fourth.setText("Player 4: 70");
-        fifth.setText("Player 5: 60");
-        progressBar.setProgress(0.0);
+        try {
+            // Leggi la classifica dal file
+            ArrayList<String[]> scores = new Classification("score.dat").read();
+
+            // Aggiorna i campi di testo con i valori letti
+            if (scores.size() > 0) {
+                first.setText(scores.get(0)[0] + " " + scores.get(0)[1]);
+            }
+            if (scores.size() > 1) {
+                second.setText(scores.get(1)[0] + " " + scores.get(1)[1]);
+            }
+            if (scores.size() > 2) {
+                third.setText(scores.get(2)[0] + " " + scores.get(2)[1]);
+            }
+            if (scores.size() > 3) {
+                fourth.setText(scores.get(3)[0] + " " + scores.get(3)[1]);
+            }
+            if (scores.size() > 4) {
+                fifth.setText(scores.get(4)[0] + ": " + scores.get(4)[1]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         startProgressBar();
     }
 
@@ -75,6 +100,7 @@ public class ScoreController {
             // Get the controller of MazeController
             MazeController mazeController = loader.getController();
             mazeController.setDifficulty(difficulty);
+            mazeController.setPlayerProperty(playerProperty);
             mazeController.initializeGame();
 
             // Show the Maze scene
