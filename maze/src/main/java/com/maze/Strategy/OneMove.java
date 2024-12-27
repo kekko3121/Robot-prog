@@ -8,7 +8,7 @@ import com.maze.Interactors.Box;
 
 /**
  * Classe per calcolare il prossimo movimento del microrobot, implementa Dijkstra per
- * consentire al robot di muoversi in una cella adiacente a quella attuale
+ * consentire al microrobot di muoversi in una cella adiacente a quella attuale
  * @see IStrategy  
  */
 public class OneMove implements IStrategy{
@@ -35,7 +35,7 @@ public class OneMove implements IStrategy{
         ArrayList<Integer> pathToExit; // percorso per uscire dal labirinto
 
         do{
-            pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), exitMazeId);
+            pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), exitMazeId); //calcola il percorso più breve
         }while(pathToExit.size() == 0); //cercami un cammino fintanto che non ne trovi uno
 
         //Verifica che il percorso contenga almeno due celle

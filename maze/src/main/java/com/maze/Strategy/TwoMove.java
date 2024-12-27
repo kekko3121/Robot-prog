@@ -31,7 +31,7 @@ public class TwoMove implements IStrategy {
         int size = 2;  // prossima posizione del microrobot
 
         do{
-            pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), exitMazeId);
+            pathToExit = dijkstra.calculateShortestPath(currentBox.getId(), exitMazeId); //calcola il percorso più breve
         }while(pathToExit.size() == 0); //cercami un cammino fintanto che non ne trovi uno
 
         //Verifica che il percorso contenga almeno due celle

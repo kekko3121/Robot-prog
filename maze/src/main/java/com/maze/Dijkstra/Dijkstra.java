@@ -14,7 +14,7 @@ import com.maze.Interactors.Box;
  */
 public class Dijkstra {
 
-    private Graph<Box> graph;
+    private Graph<Box> graph; // grafo orientato e ponderato per trovare il percorso più breve
     private ArrayList<Integer> previousNodes; // Lista dei predecessori
     private ArrayList<Integer> distances; // Lista delle distanze minime
 
@@ -25,8 +25,6 @@ public class Dijkstra {
      */
     public Dijkstra(Graph<Box> graph) {
         this.graph = graph;
-        this.previousNodes = new ArrayList<>();
-        this.distances = new ArrayList<>();
     }
 
     /**
@@ -36,30 +34,31 @@ public class Dijkstra {
      * @return una lista contenente la distanza minima dal nodo sorgente a ciascun nodo
      */
     public ArrayList<Integer> calculateShortestPath(Integer source, Integer dest) {
-        int n = graph.getEdge().size();
-        distances = new ArrayList<>(Collections.nCopies(n, Integer.MAX_VALUE));
-        previousNodes = new ArrayList<>(Collections.nCopies(n, -1));
-        distances.set(source, 0);
-    
+        int n = graph.getEdge().size(); // Numero di nodi nel grafo
+        distances = new ArrayList<>(Collections.nCopies(n, Integer.MAX_VALUE)); // Inizializza la lista delle distanze minime
+        previousNodes = new ArrayList<>(Collections.nCopies(n, -1)); // Inizializza la lista dei predecessori
+        distances.set(source, 0); // La distanza dal nodo sorgente a se stesso è 0s
+        
+        // Coda di priorità per mantenere i nodi in ordine crescente di distanza
         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(distances::get));
-        pq.add(source);
+        pq.add(source); // Aggiunge il nodo sorgente alla coda di priorità
     
-        while (!pq.isEmpty()) {
-            int current = pq.poll();
-            if (current == dest) break;
+        while (!pq.isEmpty()) { // Finché la coda di priorità non è vuota
+            int current = pq.poll(); // Estrae il nodo con la distanza minima
+            if (current == dest) break; // Se il nodo corrente è il nodo di destinazione, esce dal ciclo
     
-            for (Edge edge : graph.getEdge().get(current)) {
-                int neighbor = edge.getDest();
-                int newDist = distances.get(current) + edge.getWeight();
-                if (newDist < distances.get(neighbor)) {
-                    distances.set(neighbor, newDist);
-                    previousNodes.set(neighbor, current);
-                    pq.add(neighbor);
+            for (Edge edge : graph.getEdge().get(current)) { // Per ogni arco uscente dal nodo corrente
+                int neighbor = edge.getDest(); // Nodo di destinazione dell'arco
+                int newDist = distances.get(current) + edge.getWeight(); // Calcola la nuova distanza
+                if (newDist < distances.get(neighbor)) { // Se la nuova distanza è minore della distanza attuale
+                    distances.set(neighbor, newDist); // Aggiorna la distanza minima
+                    previousNodes.set(neighbor, current); // Aggiorna il predecessore
+                    pq.add(neighbor); // Aggiunge il nodo alla coda di priorità
                 }
             }
         }
     
-        return getShortestPath(dest);
+        return getShortestPath(dest); // Restituisce il percorso più breve dal nodo sorgente al nodo di destinazione
     }    
 
     /**
@@ -68,18 +67,14 @@ public class Dijkstra {
      * @return una lista di nodi che rappresenta il percorso più breve
      */
     public ArrayList<Integer> getShortestPath(Integer destination) {
-        ArrayList<Integer> path = new ArrayList<>();
-        if (destination < 0 || destination >= previousNodes.size()) {
+        ArrayList<Integer> path = new ArrayList<>(); // Inizializza il percorso più breve
+        if (destination < 0 || destination >= previousNodes.size()) { // Se l'indice è fuori dai limiti
             return path; // Restituisce un percorso vuoto se l'indice è fuori dai limiti
         }
-        for (Integer at = destination; at != -1; at = previousNodes.get(at)) {
-            path.add(at);
+        for (Integer at = destination; at != -1; at = previousNodes.get(at)) { // Per ogni nodo nel percorso
+            path.add(at); // Aggiunge il nodo al percorso
         }
-        Collections.reverse(path);
-        return path;
-    }
-
-    public int getNodes() {
-        return graph.getNodes();
+        Collections.reverse(path); // Inverte il percorso
+        return path; // Restituisce il percorso più breve
     }
 }

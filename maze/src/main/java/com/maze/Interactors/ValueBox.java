@@ -6,8 +6,8 @@ package com.maze.Interactors;
 public enum ValueBox {
     WALL, // casella con muro
     EMPTY, // casella vuota
-    RED,
-    GREEN,
-    YELLOW,
-    CYAN;
+    RED, // casella rossa
+    GREEN, // casella verde
+    YELLOW, // casella gialla
+    CYAN; // casella ciano
 }

@@ -10,7 +10,7 @@ import com.maze.State.Flee;
 /**
  * Classe che rappresenta il ConcreteSubscriber nel pattern
  * Observer. Si occupa di contenere gli aggiornamenti inviati
- * dal game, in merito a posizione e stato del robot, stato del
+ * dal game, in merito a posizione e stato del microrobot, stato del
  * labirinto e dimensione dello stesso*/
 public class UpdateGame implements PositionSub {
     
@@ -75,6 +75,10 @@ public class UpdateGame implements PositionSub {
         return maze;
     }
 
+    /**
+     * Restituisce lo stato attuale del microrobot
+     * @return stato attuale del microrobot
+     */
     public String getState() {
         if(state instanceof Pursuit)
             return "Pursuit";

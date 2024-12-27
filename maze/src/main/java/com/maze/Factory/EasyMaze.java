@@ -4,7 +4,7 @@ import com.maze.Interactors.ValueBox;
 
 /**
  * Classe che implementa il labirinto facile.
- * Il labirinto facile è un labirinto con dimensione 14x14 e con un numero di botole pari a 2.
+ * Il labirinto facile è un labirinto con dimensione 8x8.
  * @see Maze
  */
 public class EasyMaze extends Maze{

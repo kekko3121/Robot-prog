@@ -4,7 +4,7 @@ import com.maze.Interactors.ValueBox;
 
 /**
  * Classe che implementa il labirinto medio.
- * Il labirinto medio è un labirinto con dimensione 14x14 e con un numero di botole pari a 4.
+ * Il labirinto medio è un labirinto con dimensione 12x12.
  * @see Maze
  */
 public class MediumMaze extends Maze{
@@ -13,7 +13,7 @@ public class MediumMaze extends Maze{
      * Costruttore della classe per passare la dimensione del labirinto.
      */
     public MediumMaze(){
-        super(12); // call the constructor of the Maze class with the dimension of 14
+        super(12); // chiama il costruttore della superclasse per passare la dimensione del labirinto
     }
 
     /**

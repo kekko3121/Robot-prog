@@ -23,10 +23,10 @@ public class Microrobot {
         this.microRobotState = microRobotState;
     }
 
-    /**
-     * Metodo per cambiare lo stato del microrobot.
-     * @param microRobotState nuovo stato del microrobot
-     */
+   /**
+    * Cambia la posizione attuale del microrobot.
+    * @param actualBox
+    */
     public void setActualBox(Box actualBox){
         this.box = actualBox;
     }

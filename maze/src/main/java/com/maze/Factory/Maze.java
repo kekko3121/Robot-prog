@@ -22,13 +22,15 @@ public abstract class Maze implements IMaze {
     private Graph<Box> emptyBox; // grafo contente le caselle del labirinto senza muri
 
    /**
-    * Costruttore della classe Maze che inizializza la matrice del labirinto con caselle vuote
+    * Costruttore della classe Maze che inizializza la matrice e il grafo del labirinto con caselle vuote
+    * e genera l'uscita del labirinto
     * @param dim
     */
     public Maze(int dim){
 
         maze = new Box[dim][dim]; // inizializza la matrice del labirinto
 
+        // inizializza la matrice con caselle vuote
         for(int i = 0; i < dim; i++){
             for(int j = 0; j < dim; j++){
                 maze[i][j] = new Box(ValueBox.EMPTY, new Position(i,j)); // inizializza la casella con valore EMPTY
@@ -99,6 +101,9 @@ public abstract class Maze implements IMaze {
         return this.emptyBox.getNode(id);
     }
 
+    /**
+     * Metodo per creare il grafo del labirinto
+     */
     public void createGraph(){
         this.emptyBox.graphGen();
     }

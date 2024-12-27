@@ -4,7 +4,7 @@ import com.maze.Interactors.ValueBox;
 
 /**
  * Classe che implementa il labirinto difficile.
- * Il labirinto difficile è un labirinto con dimensione 14x14 e con un numero di botole pari a 7.
+ * Il labirinto difficile è un labirinto con dimensione 14x14.
  * @see Maze
  */
 public class HardMaze extends Maze{
@@ -14,7 +14,7 @@ public class HardMaze extends Maze{
      * Costruttore della classe per passare la dimensione del labirinto.
      */
     public HardMaze(){
-        super(14); // call the constructor of the Maze class with the dimension of 14
+        super(14); // chiama il costruttore della superclasse per passare la dimensione del labirinto
     }
 
     /**

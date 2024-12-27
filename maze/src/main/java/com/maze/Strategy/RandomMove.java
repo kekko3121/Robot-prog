@@ -12,7 +12,7 @@ import com.maze.Interactors.Box;
  */
 public class RandomMove implements IStrategy {
 
-    private final Graph<Box> graph;
+    private Graph<Box> graph; // Grafo del labirinto
 
     /**
      * Costruttore per inizializzare la strategia con il grafo.

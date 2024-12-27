@@ -6,11 +6,11 @@ import java.util.Map;
 /**
  * Classe Grafo generica astratta, contiene i metodi base di gestione
  * di un grafo.
- * Il grafo e' un grafo orientato e pesato*/
+ * Il grafo e' un grafo orientato e ponderato*/
 public abstract class Graph<T> {
     
     // Mappa dei vertici con la lista dei loro archi
-    private Map<Integer, ArrayList<Edge>> edge; //
+    private Map<Integer, ArrayList<Edge>> edge;
 
     // Costruttore per inizializare la mappa
     Graph(){
@@ -18,7 +18,7 @@ public abstract class Graph<T> {
     }
 
     /**
-     * Aggiunge un arco orientato e pesato tra due nodi del grafo.
+     * Aggiunge un arco orientato e ponderato tra due nodi del grafo.
      * Se i nodi di partenza o destinazione non esistono, vengono aggiunti al grafo.
      * @param source il nodo di partenza dell'arco
      * @param dest il nodo di destinazione dell'arco
