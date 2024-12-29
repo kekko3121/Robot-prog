@@ -19,7 +19,6 @@ import com.maze.Observer.UpdateGame;
 import com.maze.Proxy.Classification;
 import com.maze.Interactors.Box;
 import com.maze.Interactors.Hardships;
-import com.maze.Interactors.Position;
 import com.maze.Interactors.ValueBox;
 
 public class MazeController {
@@ -88,7 +87,7 @@ public class MazeController {
         maze = instance.getMaze();
 
         // Inizializza la vista del labirinto
-        buildMaze(instance.getExitPosition());
+        buildMaze();
         
         // Crea e imposta il rettangolo del microrobot con l'immagine
         microrobot = new Rectangle(37, 37);
@@ -112,7 +111,7 @@ public class MazeController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
             instance.notifyObservers();
             instance.go();
-            instance.updateCells();
+            instance.updateBoxs();
             maze = gameStateSub.getMaze();
             this.updateMazeView(); // Aggiorna la vista del labirinto
             instance.notifyObservers();
@@ -198,7 +197,7 @@ public class MazeController {
         }
     }
 
-    public void buildMaze(Position exPosition) {
+    public void buildMaze() {
         int size = maze.length;
         mazeView = new ArrayList<>();
         // Disegna il labirinto interno
@@ -223,7 +222,7 @@ public class MazeController {
         // Disegna i muri esterni attorno al labirinto interno
         for (int i = -1; i <= size; i++) {
             for (int j = -1; j <= size; j++) {
-                if ( (i == -1 || i == size || j == -1 || j == size) && !(i == exPosition.getX() - 1 && j == exPosition.getY() - 1)) {
+                if ( (i == -1 || i == size || j == -1 || j == size) && !(i == instance.getExitPosition().getX() - 1 && j == instance.getExitPosition().getY() - 1)) {
                     Rectangle rect = new Rectangle(37, 37);
                     rect.setFill(Color.GRAY); // Colore dei muri esterni
                     rect.setStroke(Color.BLACK); // Bordo nero
@@ -235,6 +234,4 @@ public class MazeController {
             }
         }
     }
-
-
 }

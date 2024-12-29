@@ -34,7 +34,7 @@ public class Dijkstra {
      * @return una lista contenente la distanza minima dal nodo sorgente a ciascun nodo
      */
     public ArrayList<Integer> calculateShortestPath(Integer source, Integer dest) {
-        int n = graph.getEdge().size(); // Numero di nodi nel grafo
+        int n = graph.getEdges().size(); // Numero di nodi nel grafo
         distances = new ArrayList<>(Collections.nCopies(n, Integer.MAX_VALUE)); // Inizializza la lista delle distanze minime
         previousNodes = new ArrayList<>(Collections.nCopies(n, -1)); // Inizializza la lista dei predecessori
         distances.set(source, 0); // La distanza dal nodo sorgente a se stesso è 0s
@@ -47,7 +47,7 @@ public class Dijkstra {
             int current = pq.poll(); // Estrae il nodo con la distanza minima
             if (current == dest) break; // Se il nodo corrente è il nodo di destinazione, esce dal ciclo
     
-            for (Edge edge : graph.getEdge().get(current)) { // Per ogni arco uscente dal nodo corrente
+            for (Edge edge : graph.getEdges().get(current)) { // Per ogni arco uscente dal nodo corrente
                 int neighbor = edge.getDest(); // Nodo di destinazione dell'arco
                 int newDist = distances.get(current) + edge.getWeight(); // Calcola la nuova distanza
                 if (newDist < distances.get(neighbor)) { // Se la nuova distanza è minore della distanza attuale

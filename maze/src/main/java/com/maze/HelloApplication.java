@@ -5,17 +5,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Classe per l'avvio dell'applicazione
+ */
 public class HelloApplication extends Application {
 
+    /**
+     * Metodo per l'avvio dell'applicazione
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("homepageswarm.fxml"));
-            primaryStage.setResizable(false);
-            primaryStage.setTitle("MICROROBOT MAZE EXPLORER : SWARM EDITION");
-            primaryStage.setScene(new Scene(fxmlLoader.load()));
-            primaryStage.show();
+        // Caricamento della schermata iniziale
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("homepageswarm.fxml"));
+        primaryStage.setResizable(false); // Impostazione della finestra non ridimensionabile
+        primaryStage.setTitle("MICROROBOT MAZE EXPLORER : SWARM EDITION"); // Impostazione del titolo della finestra
+        primaryStage.setScene(new Scene(fxmlLoader.load())); // Impostazione della scena
+        primaryStage.show(); // Visualizzazione della finestra
     }
 
+    /**
+    * main per l'avvio dell'applicazione
+    */
     public static void main(String[] args) {
         launch(args);
     }

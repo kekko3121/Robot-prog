@@ -41,7 +41,8 @@ public class Game implements Observable {
         
         assert maze != null; // Assicura che il labirinto sia stato creato
 
-        this.microrobot = new Microrobot(maze.getBoxById(0), new Pursuit(maze.getGraphMaze(), this.maze.getBox(this.maze.getExitMaze().getX(), this.maze.getExitMaze().getY()).getId()));// inizializza la lista dei microrobot
+        // inizializza il microrobot con la posizione iniziale e lo stato di ricerca
+        this.microrobot = new Microrobot(maze.getBoxById(0), new Pursuit(this.maze.getGraphMaze(), this.maze.getBox(this.maze.getExitMaze().getX(), this.maze.getExitMaze().getY()).getId()));
         observers = new ArrayList<>(); // inizializza la lista degli osservatori
         firstMove = true; // inizializza il primo movimento del microrobot
     }
@@ -97,7 +98,7 @@ public class Game implements Observable {
      * Metodo per aggiornare i colori delle celle.
      * Scorre la matrice e assegna, per ogni cella, un nuovo colore, 
      * in base a una probabilita'.*/
-    public void updateCells(){
+    public void updateBoxs(){
         int random;
         Box[][] maze = this.maze.getMaze();
         for(int i = 0; i < this.maze.getDim(); i++){

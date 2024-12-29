@@ -12,7 +12,8 @@ import java.util.function.UnaryOperator;
 /**
  * Classe astratta che contiene due metodi statici, che
  * ricopre la responsabilita' di gestire le TextFields,
- * da un punto di vista di constraints */
+ * da un punto di vista di constraints 
+ */
 public abstract class TextManager {
 
     /**

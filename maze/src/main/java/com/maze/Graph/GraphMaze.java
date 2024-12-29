@@ -7,6 +7,7 @@ import com.maze.Interactors.Box;
  * Classe per la generazione del grafo a partire dal labirinto generato
  * estende la classe Graph astratta
  */
+
 public class GraphMaze extends Graph<Box>{
     
     private Box[][] maze; // labirinto
@@ -120,13 +121,5 @@ public class GraphMaze extends Graph<Box>{
                 }
             }
         }
-    }
-
-    /**
-     * Restituisce la dimensione del labirinto.
-     * @return la dimensione del labirinto
-     */
-    public Integer getDim() {
-        return this.dim;
     }
 }

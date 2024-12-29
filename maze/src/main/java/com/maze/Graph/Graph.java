@@ -1,20 +1,19 @@
 package com.maze.Graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 /**
  * Classe Grafo generica astratta, contiene i metodi base di gestione
  * di un grafo.
  * Il grafo e' un grafo orientato e ponderato*/
 public abstract class Graph<T> {
     
-    // Mappa dei vertici con la lista dei loro archi
-    private Map<Integer, ArrayList<Edge>> edge;
+    // Multimap dei vertici con la lista dei loro archi
+    private Multimap<Integer, Edge> edges;
 
-    // Costruttore per inizializare la mappa
+    // Costruttore per inizializzare la multimap
     Graph(){
-        edge = new HashMap<>();
+        edges = ArrayListMultimap.create();
     }
 
     /**
@@ -25,28 +24,17 @@ public abstract class Graph<T> {
      * @param weight il peso dell'arco
      */
     public void addEdge(Integer source, Integer dest, Integer weight){
-        // Inizializza la lista di adiacenza per source se non esiste già
-        edge.computeIfAbsent(source, k -> new ArrayList<>()).add(new Edge(dest, weight));
-        // Inizializza la lista di adiacenza per dest se non esiste già
-        edge.putIfAbsent(dest, new ArrayList<>());
+        edges.put(source, new Edge(dest, weight));
     }
 
-    /**
-     * Restituisce la mappa completa dei vertici del grafo con i rispettivi archi di adiacenza.
-     * La mappa contiene i nodi del grafo come chiavi (di tipo Integer), ciascuno associato a una lista di archi 
+     /**
+     * Restituisce la multimap completa dei vertici del grafo con i rispettivi archi di adiacenza.
+     * La multimap contiene i nodi del grafo come chiavi (di tipo Integer), ciascuno associato a una lista di archi 
      * (List<Edge>) che rappresenta i collegamenti con i nodi adiacenti.
-     * @return una mappa in cui le chiavi sono i nodi del grafo e i valori sono le liste degli archi adiacenti.
+     * @return una multimap in cui le chiavi sono i nodi del grafo e i valori sono le liste degli archi adiacenti.
      */
-    public Map<Integer, ArrayList<Edge>> getEdge(){
-        return this.edge;
-    }
-
-    /**
-     * Restituisce il numero di nodi del grafo.
-     * @return il numero di nodi del grafo
-     */
-    public int getNodes(){
-        return this.edge.keySet().size();
+    public Multimap<Integer, Edge> getEdges(){
+        return this.edges;
     }
 
     /**

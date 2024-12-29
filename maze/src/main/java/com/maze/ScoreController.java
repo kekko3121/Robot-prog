@@ -16,43 +16,58 @@ import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Classe che gestisce la schermata di classifica.
+ */
 public class ScoreController {
 
     @FXML
-    private ProgressBar progressBar;
+    private ProgressBar progressBar; // barra di caricamento dell'attesa della creazione del labirinto
 
     @FXML
-    private Label first;
+    private Label first; // etichetta per il primo posto
 
     @FXML
-    private Label second;
+    private Label second; // etichetta per il secondo posto
 
     @FXML
-    private Label third;
+    private Label third; // etichetta per il terzo posto
 
     @FXML
-    private Label fourth;
+    private Label fourth; // etichetta per il quarto posto
 
     @FXML
-    private Label fifth;
+    private Label fifth; // etichetta per il quinto posto
 
-    private String difficulty;
+    private String difficulty; // difficoltà del gioco
 
-    private PlayerProperty playerProperty;
+    private PlayerProperty playerProperty; // dati del giocatore
 
+    /**
+     * Imposta la difficoltà del gioco.
+     * @param difficulty difficoltà del gioco
+     */
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
+    /**
+     * Imposta i dati del giocatore.
+     * @param playerProperty dati del giocatore
+     */
     public void setPlayerProperty(PlayerProperty playerProperty) {
         this.playerProperty = playerProperty;
     }
 
+    /**
+     * Metodo di inizializzazione della classe.
+     * Legge la classifica dal file e aggiorna i campi di testo con i valori letti.
+     */
     @FXML
-    private void initialize() {
+    public void custominitialize() {
         try {
             // Leggi la classifica dal file
-            ArrayList<String[]> scores = new Classification("score.dat").read();
+            ArrayList<String[]> scores = new Classification(difficulty + ".dat").read();
 
             // Aggiorna i campi di testo con i valori letti
             if (scores.size() > 0) {

@@ -11,23 +11,44 @@ public class PlayerProperty {
 
     private SimpleStringProperty surname; //contiene cognome del player
 
+    /**
+     * Costruttore della classe PlayerProperty che inizializza i valori
+     * @param name
+     * @param surname
+     */
     public PlayerProperty(String name, String surname){
         this.name = new SimpleStringProperty(name);
         this.surname = new SimpleStringProperty(surname);
     }
 
+    /**
+     * Metodo che restituisce il nome del player
+     * @return
+     */
     public String getPlayerName() {
         return name.get();
     }
 
+    /**
+     * Metodo che setta il nome del player
+     * @param name
+     */
     public void setPlayerName(String name) {
         this.name.set(name);
     }
 
-    public void setTime(String surname) {
+    /**
+     * Metodo che setta il cognome del player
+     * @param surname
+     */
+    public void setPlayerSurname(String surname) {
         this.surname.set(surname);
     }
 
+    /**
+     * Metodo che restituisce il cognome del player
+     * @return
+     */
     public String getPlayerSurname() {
         return surname.get();
     }

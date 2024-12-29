@@ -1,6 +1,7 @@
 package com.maze.Strategy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.maze.Graph.Edge;
@@ -31,7 +32,7 @@ public class RandomMove implements IStrategy {
     public Integer nextMove(Box currentBox) {
 
         // Ottiene la lista degli archi adiacenti alla casella attuale
-        ArrayList<Edge> edges = graph.getEdge().get(currentBox.getId());
+        Collection<Edge> edges = graph.getEdges().get(currentBox.getId());
         // Crea una lista di ID dei nodi adiacenti
         ArrayList<Integer> neighbors = new ArrayList<>();
         for (Edge edge : edges) {

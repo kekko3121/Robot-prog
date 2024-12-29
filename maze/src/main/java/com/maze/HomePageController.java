@@ -2,7 +2,6 @@ package com.maze;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -14,17 +13,18 @@ import java.io.IOException;
 public class HomePageController {
 
     @FXML
-    private Button helpButton;
+    private Button helpButton; // Bottone per mostrare la pagina di aiuto
 
     @FXML
-    private Button quitButton;
+    private Button quitButton; // Bottone per chiudere l'applicazione
 
     @FXML
-    private Button playButton;
+    private Button playButton; // Bottone per iniziare a giocare
 
-    @FXML
-    private ImageView homeImage;
-
+    /**
+     * Metodo per mostrare la pagina di aiuto
+     * @param event
+     */
     @FXML
     private void showGithub(ActionEvent event) {
         // Implementa la logica per mostrare la pagina GitHub
@@ -36,6 +36,10 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Metodo per chiudere l'applicazione
+     * @param event
+     */
     @FXML
     void quit(ActionEvent event) {
         Node source = (Node) event.getSource();// Ottiene il nodo sorgente dell'evento
@@ -43,6 +47,9 @@ public class HomePageController {
         stage.close();// Chiude la finestra corrente
     }
 
+    /**
+     * Metodo per mostrare la pagina di gioco (playpage) per l'inserimento del nome del giocatore e la scelta del livello
+     */
     @FXML
     private void showPlaypage() {
         try {
