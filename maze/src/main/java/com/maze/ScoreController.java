@@ -83,7 +83,7 @@ public class ScoreController {
                 fourth.setText(scores.get(3)[0] + " " + scores.get(3)[1]);
             }
             if (scores.size() > 4) {
-                fifth.setText(scores.get(4)[0] + ": " + scores.get(4)[1]);
+                fifth.setText(scores.get(4)[0] + " " + scores.get(4)[1]);
             }
         } catch (IOException e) {
             e.printStackTrace();

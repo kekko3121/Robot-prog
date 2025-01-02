@@ -4,12 +4,16 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,61 +25,76 @@ import com.maze.Interactors.Box;
 import com.maze.Interactors.Hardships;
 import com.maze.Interactors.ValueBox;
 
+/**
+ * Classe per la gestione del labirinto visivo e del gioco
+ */
 public class MazeController {
 
     @FXML
-    private Pane mazePane;
+    private Pane mazePane; // Pannello per il labirinto
 
     @FXML
-    private Label Name;
+    private Label Name; // Etichetta per il nome del giocatore
 
     @FXML
-    private Label Surname;
+    private Label Surname; // Etichetta per il cognome del giocatore
 
     @FXML
-    private Label RobotState;
+    private Label RobotState; // Etichetta per lo stato del microrobot
 
     @FXML
-    private Label Time;
+    private Label Time; // Etichetta per il tempo trascorso
 
     @FXML
-    private ArrayList<Rectangle> mazeView;
+    private ArrayList<Rectangle> mazeView; // Vista del labirinto
 
     @FXML
-    private Rectangle microrobot;
+    private Rectangle microrobot; // Rettangolo per il microrobot
 
-    private Box[][] maze;
+    private Box[][] maze; // Labirinto
 
-    private Game instance;
+    private Game instance; // Istanza del gioco
 
-    private UpdateGame gameStateSub;
+    private UpdateGame gameStateSub; // Osservatore del gioco
     
-    private Timeline timeline;
+    private Timeline timeline; // Timeline per il gioco
 
-    private Timeline timerTimeline;
+    private Timeline timerTimeline; // Timeline per il timer
 
-    private String playerTime;
+    private String playerTime; // Tempo trascorso dal giocatore
 
-    private String difficulty;
+    private String difficulty; // Difficoltà del gioco
     
-    private PlayerProperty playerProperty;
+    private PlayerProperty playerProperty; // Dati del giocatore
 
-    private long startTime;
+    private long startTime; // Tempo di inizio del gioco
 
+    /**
+     * Metodo per impostare la difficoltà del gioco
+     * @param difficulty
+     */
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
+    /**
+     * Metodo per impostare i dati del giocatore
+     * @param playerProperty
+     */
     public void setPlayerProperty(PlayerProperty playerProperty) {
         this.playerProperty = playerProperty;
     }
 
+    /**
+     * Metodo per inizializzare il gioco
+     */
     public void initializeGame() {
 
+        // Imposta il nome e il cognome del giocatore nelle etichette
         Name.setText(playerProperty.getPlayerName());
         Surname.setText(playerProperty.getPlayerSurname());
 
-        // Inizializza il labirinto e il gioco
+        // Inizializza il labirinto e il gioco in base alla difficoltà scelta
         if (difficulty.equals("Easy")) {
             instance = new Game(Hardships.EASY);
         } else if (difficulty.equals("Medium")) {
@@ -83,8 +102,8 @@ public class MazeController {
         } else if (difficulty.equals("Hard")) {
             instance = new Game(Hardships.HARD);
         }
-        gameStateSub = new UpdateGame();
-        maze = instance.getMaze();
+        gameStateSub = new UpdateGame(); // Crea l'osservatore del gioco
+        maze = instance.getMaze(); // Ottiene il labirinto
 
         // Inizializza la vista del labirinto
         buildMaze();
@@ -102,18 +121,22 @@ public class MazeController {
         startGame();
     }
 
+    /**
+     * Metodo per avviare il gioco
+     */
     private void startGame() {
         instance.subscribe(gameStateSub); // Iscrive l'osservatore al gioco
 
         // Salva il tempo di inizio in millisecondi
         startTime = System.currentTimeMillis();
 
+        // Timeline per aggiornare il gioco e la vista del labirinto
         timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
             instance.notifyObservers();
             instance.go();
             instance.updateBoxs();
             maze = gameStateSub.getMaze();
-            this.updateMazeView(); // Aggiorna la vista del labirinto
+            this.updateMazeView();
             instance.notifyObservers();
             RobotState.setText(gameStateSub.getState());
 
@@ -151,6 +174,9 @@ public class MazeController {
         timerTimeline.play();
     }
 
+    /**
+     * Metodo per aggiornare la vista del labirinto
+     */
     private void updateMazeView() {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
@@ -182,12 +208,37 @@ public class MazeController {
         }
     }
 
+    /**
+     * Metodo per terminare il gioco
+     * @throws IOException
+     */
     private void afterGame() throws IOException {
         timeline.stop();
         timerTimeline.stop();
         insertPlayerData(playerProperty.getPlayerName(), playerProperty.getPlayerSurname(), playerTime);
+
+        // Carica la nuova scena dal file FXML
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/maze/finalscore.fxml"));
+        Parent root = fxmlLoader.load();
+
+        // Ottieni il controller della nuova scena
+        FinalScoreController finalScoreController = fxmlLoader.getController();
+
+        // Passa i dati necessari al controller
+        finalScoreController.viewScore(difficulty); // Passa la difficoltà
+
+        // Imposta la nuova scena
+        Stage stage = (Stage) mazePane.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
+    /**
+     * Metodo per inserire i dati del giocatore nella classifica
+     * @param name
+     * @param surname
+     * @param time
+     */
     private void insertPlayerData(String name, String surname, String time) {
         try {
             Classification classification = new Classification("score.dat", name, surname, time);
@@ -197,6 +248,9 @@ public class MazeController {
         }
     }
 
+    /**
+     * Metodo per costruire il labirinto visivo
+     */
     public void buildMaze() {
         int size = maze.length;
         mazeView = new ArrayList<>();
@@ -222,7 +276,7 @@ public class MazeController {
         // Disegna i muri esterni attorno al labirinto interno
         for (int i = -1; i <= size; i++) {
             for (int j = -1; j <= size; j++) {
-                if ( (i == -1 || i == size || j == -1 || j == size) && !(i == instance.getExitPosition().getX() - 1 && j == instance.getExitPosition().getY() - 1)) {
+                if ( (i == -1 || i == size || j == -1 || j == size) && !(i == instance.getExitPosition().getX() + 1 && j == instance.getExitPosition().getY() + 1)) {
                     Rectangle rect = new Rectangle(37, 37);
                     rect.setFill(Color.GRAY); // Colore dei muri esterni
                     rect.setStroke(Color.BLACK); // Bordo nero

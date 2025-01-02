@@ -68,9 +68,6 @@ public class Dijkstra {
      */
     public ArrayList<Integer> getShortestPath(Integer destination) {
         ArrayList<Integer> path = new ArrayList<>(); // Inizializza il percorso più breve
-        if (destination < 0 || destination >= previousNodes.size()) { // Se l'indice è fuori dai limiti
-            return path; // Restituisce un percorso vuoto se l'indice è fuori dai limiti
-        }
         for (Integer at = destination; at != -1; at = previousNodes.get(at)) { // Per ogni nodo nel percorso
             path.add(at); // Aggiunge il nodo al percorso
         }

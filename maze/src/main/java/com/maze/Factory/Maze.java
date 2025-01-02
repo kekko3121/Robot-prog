@@ -62,7 +62,7 @@ public abstract class Maze implements IMaze {
      * Genera l'uscita del labirinto
      */
     private void generateExit(){
-        exitMaze = new Position(ThreadLocalRandom.current().nextInt(1, dim - 1), 0); // genera la posizione dell'uscita
+        exitMaze = new Position(ThreadLocalRandom.current().nextInt(dim - 3, dim - 1), dim - 1); // genera la posizione dell'uscita
     }
 
     /**
