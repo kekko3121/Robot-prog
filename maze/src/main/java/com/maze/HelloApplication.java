@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
         // Caricamento della schermata iniziale
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("homepageswarm.fxml"));
         primaryStage.setResizable(false); // Impostazione della finestra non ridimensionabile
-        primaryStage.setTitle("MICROROBOT MAZE EXPLORER : SWARM EDITION"); // Impostazione del titolo della finestra
+        primaryStage.setTitle("MICROROBOT MAZE EXPLORER : DIJKSTRA EDITION"); // Impostazione del titolo della finestra
         primaryStage.setScene(new Scene(fxmlLoader.load())); // Impostazione della scena
         primaryStage.show(); // Visualizzazione della finestra
     }
