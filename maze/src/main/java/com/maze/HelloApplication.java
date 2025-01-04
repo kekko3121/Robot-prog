@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Caricamento della schermata iniziale
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("homepageswarm.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("homepage.fxml"));
         primaryStage.setResizable(false); // Impostazione della finestra non ridimensionabile
         primaryStage.setTitle("MICROROBOT MAZE EXPLORER : DIJKSTRA EDITION"); // Impostazione del titolo della finestra
         primaryStage.setScene(new Scene(fxmlLoader.load())); // Impostazione della scena

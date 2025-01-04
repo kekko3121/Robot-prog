@@ -41,7 +41,7 @@
          </effect>
       </Button>
       
-      <ImageView fx:id="swarmRobot" fitHeight="193.0" fitWidth="112.0" layoutX="1148.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="swarmRobot" fitHeight="171.0" fitWidth="305.0" layoutX="978.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/robot.png" />
          </image>

@@ -13,7 +13,7 @@ public class MediumMaze extends Maze{
      * Costruttore della classe per passare la dimensione del labirinto.
      */
     public MediumMaze(){
-        super(12); // chiama il costruttore della superclasse per passare la dimensione del labirinto
+        super(10); // chiama il costruttore della superclasse per passare la dimensione del labirinto
     }
 
     /**

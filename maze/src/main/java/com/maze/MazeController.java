@@ -241,7 +241,7 @@ public class MazeController {
      */
     private void insertPlayerData(String name, String surname, String time) {
         try {
-            Classification classification = new Classification("score.dat", name, surname, time);
+            Classification classification = new Classification(difficulty + ".dat", name, surname, time);
             classification.write();
         } catch (IOException e) {
             e.printStackTrace();
