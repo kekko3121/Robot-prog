@@ -25,7 +25,7 @@ Scrivere un programma per la gestione del labirinto. Il programma deve permetter
 
 - Per visualizzare la presentazione del progetto andare al seguente link: [https://www.canva.com/design/DAF7W9NZMX0/xDyzYd4bE6F5-VX7O8SoHw/edit](https://www.canva.com/design/DAF7W9NZMX0/xDyzYd4bE6F5-VX7O8SoHw/edit)
 
-- Per consultare la documentazione andare al seguente link: [nome_link](link)
+- Per consultare la documentazione andare al seguente link: [https://github.com/kekko3121/Robot-prog/blob/main/Presentazione-Documentazione/Relazione_Progetto_Programmazione_III___Laboratorio_di_Programmazione_III.pdf](https://github.com/kekko3121/Robot-prog/blob/main/Presentazione-Documentazione/Relazione_Progetto_Programmazione_III___Laboratorio_di_Programmazione_III.pdf)
 
 ## Autori
 
