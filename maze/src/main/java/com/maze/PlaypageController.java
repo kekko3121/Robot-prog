@@ -69,7 +69,7 @@ public class PlaypageController {
     @FXML
     private void returntoHome(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homepageswarm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homepage.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) returnButton.getScene().getWindow();
             Scene scene = new Scene(root);

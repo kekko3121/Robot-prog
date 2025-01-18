@@ -27,11 +27,20 @@ public class HomePageController {
      */
     @FXML
     private void showGithub(ActionEvent event) {
-        // Implementa la logica per mostrare la pagina GitHub
+        // Implementazione per mostrare la pagina GitHub
         try {
-            // url del repository GitHub
-            java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/kekko3121/Robot-prog"));
-        } catch (IOException | java.net.URISyntaxException e) {
+            String url = "https://github.com/kekko3121/Robot-prog";
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                // Windows
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+            } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                // macOS
+                Runtime.getRuntime().exec("open " + url);
+            } else {
+                // Linux and other Unix-like systems
+                Runtime.getRuntime().exec("xdg-open " + url);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
